@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consejos Motivacionales - API Externa</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0074D9, #00BFFF);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        #consejo {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 400px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 10px 20px;
+            background-color: white;
+            border: none;
+            border-radius: 10px;
+            color: #0074D9;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #00BFFF;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .fade {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <h1>💡 Consejo del día</h1>
+    <div id="consejo">Presioná el botón para obtener un consejo</div>
+    <button onclick="obtenerConsejo()">Obtener nuevo consejo</button>
+
+    <script>
+        async function obtenerConsejo() {
+            const consejoDiv = document.getElementById('consejo');
+            consejoDiv.textContent = "Cargando...";
+            consejoDiv.classList.remove("fade");
+
+            try {
+                const respuesta = await fetch('https://api.adviceslip.com/advice');
+                const datos = await respuesta.json();
+                const texto = datos.slip.advice;
+
+                // Mostrar el consejo con animación
+                consejoDiv.textContent = texto;
+                consejoDiv.classList.add("fade");
+            } catch (error) {
+                consejoDiv.textContent = "Error al obtener el consejo. Revisá tu conexión.";
+            }
+        }
+
+        // Mostrar automáticamente uno al cargar la página
+        obtenerConsejo();
+    </script>
+</body>
+</html>
