@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contenido Interactivo</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #0074D9, #2ECC40);
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      margin-top: 25px;
+      font-size: 28px;
+    }
+
+    #hora {
+      font-size: 22px;
+      margin-top: 15px;
+    }
+
+    button {
+      background-color: white;
+      color: #0074D9;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 15px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #FFDC00;
+      color: black;
+    }
+
+    #quiz {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      margin: 20px auto;
+      width: 85%;
+      max-width: 400px;
+    }
+
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    #resultado {
+      font-size: 18px;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Contenido Interactivo</h1>
+
+  <h3>Hora actual:</h3>
+  <div id="hora">Cargando...</div>
+
+  <button onclick="cambiarColor()">Cambiar color de fondo</button>
+
+  <div id="quiz">
+    <h3>Mini Quiz</h3>
+    <p>1️⃣ ¿Qué lenguaje da estilo a las páginas web?</p>
+    <label><input type="radio" name="p1" value="0"> HTML</label><br>
+    <label><input type="radio" name="p1" value="1"> CSS</label><br>
+    <label><input type="radio" name="p1" value="0"> JavaScript</label><br><br>
+
+    <p>2️⃣ ¿Qué función cumple JavaScript?</p>
+    <label><input type="radio" name="p2" value="0"> Estructura</label><br>
+    <label><input type="radio" name="p2" value="0"> Estilo</label><br>
+    <label><input type="radio" name="p2" value="1"> Interactividad</label><br><br>
+
+    <p>3️⃣ ¿Qué significa API?</p>
+    <label><input type="radio" name="p3" value="1"> Interfaz de programación de aplicaciones</label><br>
+    <label><input type="radio" name="p3" value="0"> Aplicación Personal de Internet</label><br>
+    <label><input type="radio" name="p3" value="0"> Archivo Público Interno</label><br><br>
+
+    <button onclick="corregirQuiz()">Ver resultado</button>
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    // === Reloj en tiempo real ===
+    setInterval(() => {
+      const reloj = document.getElementById("hora");
+      const ahora = new Date();
+      reloj.textContent = ahora.toLocaleTimeString();
+    }, 1000);
+
+    // === Cambio aleatorio de color de fondo ===
+    function cambiarColor() {
+      const colores = ["#0074D9", "#FF4136", "#2ECC40", "#B10DC9", "#FF851B", "#7FDBFF"];
+      document.body.style.background = colores[Math.floor(Math.random() * colores.length)];
+    }
+
+    // === Quiz interactivo ===
+    function corregirQuiz() {
+      let puntaje = 0;
+      const respuestas = document.querySelectorAll('input[type="radio"]:checked');
+      respuestas.forEach(r => puntaje += parseInt(r.value));
+      const resultado = document.getElementById("resultado");
+      resultado.textContent = "Tu puntaje es: " + puntaje + "/3";
+      resultado.style.color = puntaje === 3 ? "#2ECC40" : "#FFDC00";
+    }
+  </script>
+</body>
+</html>
